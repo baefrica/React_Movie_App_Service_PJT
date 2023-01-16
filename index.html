@@ -15,136 +15,37 @@
   <script src="https://unpkg.com/react@18.2.0/umd/react.production.min.js"></script>
   <script src="https://unpkg.com/react-dom@18.2.0/umd/react-dom.production.min.js"></script>
 
+  <!-- Prop Types 설치 -->
+  <script src="https://unpkg.com/prop-types@15.7.2/prop-types.js"></script>
+
   <!-- Babel 추가 -->
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
   <script type="text/babel">
-    // MinutesToHours()
-    function MinutesToHours() {
-      const [amount, setAmount] = React.useState(0);
-      const [flipped, setFlipped] = React.useState(false);
-
-      // 입력값이 change 될 때마다
-      const onChange = (event) => {
-        console.log(event.target.value);
-        setAmount(event.target.value);
-      };
-
-      // Reset 버튼이 클릭될 때마다
-      const reset = () => {
-        setAmount(0);
-      };
-
-      const onFlip = () => {
-        console.log("Flip 버튼 클릭");
-        setFlipped((current) => !current);
-        console.log(flipped);
-        reset();
-      };
-
+    // props : Btn 으로부터 전달 받는 properties 인 인자 이름
+    function Btn({ text, isBig }) {
+      // console.log("props : ", props);
       return (
-        <div>
-          <div>
-            <label htmlFor="minutes">Minutes</label>
-            <input
-              id="minutes"
-              type="number"
-              placeholder="Minutes"
-              value={flipped ? amount * 60 : amount}
-              onChange={onChange}
-              // 만약 flipped 가 true 상태라면 disabled 는 true 상태
-              disabled={flipped}
-            />
-          </div>
-          <div>
-            <label htmlFor="hours">Hours</label>
-            <input
-              id="hours"
-              type="number"
-              placeholder="Hours"
-              value={flipped ? amount : amount / 60}
-              onChange={onChange}
-              // 만약 flipped 가 false 상태라면 disabled 는 true 상태
-              disabled={!flipped}
-            />
-          </div>
-          <button onClick={reset}>Reset</button>
-          <button onClick={onFlip}>Flip</button>
-        </div>
-      );
-    }
-
-    // KilosToMiles()
-    function KilosToMiles() {
-      const [amount, setAmount] = React.useState(0);
-      const [flipped, setFlipped] = React.useState(false);
-
-      // 입력값이 change 될 때마다
-      const onChange = (event) => {
-        setAmount(event.target.value);
-      };
-
-      // Reset 버튼이 클릭될 때마다
-      const reset = () => {
-        setAmount(0);
-      };
-
-      const onFlip = () => {
-        setFlipped((current) => !current);
-        reset();
-      };
-
-      return (
-        <div>
-          <div>
-            <label htmlFor="kilos">Kilos</label>
-            <input
-              id="kilos"
-              type="number"
-              placeholder="Kilos"
-              value={flipped ? amount * 1.609 : amount}
-              onChange={onChange}
-              // 만약 flipped 가 true 상태라면 disabled 는 true 상태
-              disabled={flipped}
-            />
-          </div>
-          <div>
-            <label htmlFor="miles">Miles</label>
-            <input
-              id="miles"
-              type="number"
-              placeholder="Miles"
-              value={flipped ? amount : amount / 1.609}
-              onChange={onChange}
-              // 만약 flipped 가 false 상태라면 disabled 는 true 상태
-              disabled={!flipped}
-            />
-          </div>
-          <button onClick={reset}>Reset</button>
-          <button onClick={onFlip}>Flip</button>
-        </div>
+        <button
+          style={{
+            backgroundColor: "tomato",
+            color: "white",
+            padding: "10px 20px",
+            border: 0,
+            borderRadius: 10,
+            fontSize: isBig ? 22 : 12,
+          }}
+        >
+          {text}
+        </button>
       );
     }
 
     // App()
-    // 분할 정복 기법을 이용함 -> App 컴포넌트에서 MinutesToHours 컴포넌트를 렌더링함
     function App() {
-      const [index, setIndex] = React.useState("0");
-
-      const onSelect = (event) => {
-        console.log(event.target.value);
-        setIndex(event.target.value);
-        console.log(index);
-      };
-
       return (
         <div>
-          <h1>Unit Converter</h1>
-          <select value={index} onChange={onSelect}>
-            <option value="0">MtoH</option>
-            <option value="1">KtoM</option>
-          </select>
-          <hr />
-          {index === "0" ? <MinutesToHours /> : <KilosToMiles />}
+          <Btn text="Save Changes" isBig={true} />
+          <Btn text="Continue" isBig={false} />
         </div>
       );
     }
